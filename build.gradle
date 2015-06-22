@@ -1,0 +1,62 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+mainClassName = 'com.tramchester.App'
+
+version = '1.0'
+
+project.ext {
+    dropwizardVersion = '0.9.0-rc1'
+}
+
+repositories {
+    maven {
+        url "http://download.java.net/maven/2"
+    }
+    mavenCentral()
+}
+
+dependencies {
+    compile('io.dropwizard:dropwizard-core:' + dropwizardVersion) { exclude group: 'asm', module: 'asm' }
+    compile('io.dropwizard:dropwizard-assets:' + dropwizardVersion) { exclude group: 'asm', module: 'asm' }
+    compile 'org.picocontainer:picocontainer:2.15',
+            'joda-time:joda-time:2.8.1',
+            'org.mongodb.morphia:morphia:1.0.1'
+
+
+    testCompile 'junit:junit:4.12',
+            'org.assertj:assertj-core:3.0.0',
+            'org.mockito:mockito-all:2.0.2-beta',
+            'io.dropwizard:dropwizard-testing:' + dropwizardVersion
+}
+
+jar {
+    manifest {
+        attributes(
+                "Manifest-Version": "1.0",
+                "Class-Path": configurations.runtime.collect { it.getName() }.join(' '),
+                "Main-Class": mainClassName
+        )
+    }
+    baseName = project.name + '-all'
+    from({ configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }) {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+}
+
+task stage(dependsOn: ['clean', 'installApp'])
+
+run {
+    args 'server', 'config/local.yml'
+}
+
+sourceSets {
+    test {
+        java {
+            srcDirs = ['src/test/unit', 'src/test/integration']
+        }
+    }
+}

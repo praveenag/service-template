@@ -1,0 +1,14 @@
+server:
+  type: simple
+  applicationContextPath: /
+  adminContextPath: /admin
+  connector:
+    type: http
+    port: 8090
+
+
+mongo:
+    host: 127.0.0.1
+    port: 27017
+    database: template
+
