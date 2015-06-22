@@ -18,7 +18,7 @@ import static org.eclipse.jetty.servlets.CrossOriginFilter.ALLOWED_METHODS_PARAM
 import static org.eclipse.jetty.servlets.CrossOriginFilter.EXPOSED_HEADERS_PARAM;
 
 public class App extends Application<AppConfiguration> {
-    public static final String SERVICE_NAME = "template-service";
+    public static final String SERVICE_NAME = "service-template";
     private static final AppLogger logger = new AppLogger(SERVICE_NAME);
 
     private final Dependencies dependencies;

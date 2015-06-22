@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS  -Ddw.server.applicationConnectors[0].port=$PORT -jar build/libs/candidate-service-all-1.0.jar server config/local.yml
+web: java $JAVA_OPTS  -Ddw.server.applicationConnectors[0].port=$PORT -jar build/libs/service-template-all-1.0.jar server config/local.yml
